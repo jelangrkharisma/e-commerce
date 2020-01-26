@@ -54,6 +54,7 @@ export default {
         .catch(err => {
           this.alert = 'Wrong username / password'
           this.formPassword = ''
+          throw err
         })
     }
   }

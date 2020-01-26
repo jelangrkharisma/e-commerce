@@ -9,7 +9,7 @@ export default {
     loggedOn: 'loggedOn'
   }),
   created () {
-    
+
   }
 }
 </script>

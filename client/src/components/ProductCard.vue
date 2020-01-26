@@ -8,7 +8,7 @@
           <div class="button-row d-flex align-items-center">
               <removeLoadingAnimation class="mr-3" v-if="isLoadingMin" :color="'#d78398'" :size="'30px'" />
               <i v-if="!isLoadingMin && quantity>0" class="fa-btn fas fa-minus-circle mr-3" @click.prevent="removeFromCart"></i>
-            
+
             <div class="btn-fixedwidth">
               <button class="btn-block btn btn-pink btn-lg" @click.prevent="addToCart">
                 <div class="d-flex align-items-center justify-content-between">
@@ -24,7 +24,6 @@
 
           <router-link class="readmore" v-if="alert == ''" :to="`/products/${product._id}`"><u>readmore...</u></router-link>
           <router-link class="readmore" v-if="alert !== ''" :to="`/products/${product._id}`">{{alert}}</router-link>
-
 
         </div>
       </div>
@@ -58,9 +57,9 @@ export default {
       this.$store.dispatch('addToCartPromise', this.product._id)
         .then(() => {
           this.alert = 'added to cart'
-          setTimeout(()=>{
-          this.alert = ''
-          },8000)
+          setTimeout(() => {
+            this.alert = ''
+          }, 8000)
           this.isLoadingAdd = false
         })
     },
@@ -70,9 +69,9 @@ export default {
       this.$store.dispatch('minusFromCartPromise', this.product._id)
         .then(() => {
           this.alert = 'removed from cart'
-          setTimeout(()=>{
-          this.alert = ''
-          },8000)
+          setTimeout(() => {
+            this.alert = ''
+          }, 8000)
           this.isLoadingMin = false
         })
     }
