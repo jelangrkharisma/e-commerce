@@ -19,4 +19,7 @@ Router.post('/carts', authentication, CartController.addToCart)
 Router.delete('/carts', authentication, CartController.removeFromCart)
 Router.delete('/allcarts', authentication, CartController.banishFromCart)
 
+// Checkout
+Router.post('/checkout', authentication, CartController.checkStock, CartController.checkOut)
+
 module.exports = Router

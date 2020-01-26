@@ -1,23 +1,36 @@
 <template>
-  <div class="">
-    <div class="d-flex justify-content-between">
-      <div class="title d-flex">
-        <spinner v-if="remLoading" class="mr-2" :color="'#d78398'" :size="'23px'" />
-        <button v-else @click.prevent="remove" class="mr-4 btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
-        <div class="mr-2 align-self-center">
-          <span class="cupcake-title">{{product._id.name}}</span>
+  <div class="cart-row">
+    <div class="row px-3">
+      <div class="left-side mr-auto">
+        <div class="title d-flex align-items-center">
+          <div class="">
+            <button @click.prevent="remove" class="mr-4 btn-cart btn btn-sm btn-light text-danger" :disabled="isLoading">
+              <i v-if="isLoading" class="fas fa-spinner"></i>
+              <i v-if="!isLoading" class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <div class="mr-2 align-self-center">
+            <div v-if="outOfStocks.includes(product._id._id)" class="">
+              <span class="cupcake-title"><s>{{product._id.name}}</s></span>
+              <small class="mx-2">out of order</small>
+            </div>
+            <span v-else class="cupcake-title">{{product._id.name}}</span>
+          </div>
         </div>
       </div>
-      <div class="amount d-flex justify-content-end align-align-items-start">
-        <div class="mr-auto">
-          <small class="align-self-center mr-1 quantity">Rp.<span>{{product._id.price}}</span></small>
-          <small class="align-self-center mr-1">X</small>
-          <small class="align-self-center mr-1 quantity">{{product.quantity}}</small>
+
+      <div class="right-side d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-start align-items-center">
+          <small class="quantity">Rp.<span>{{product._id.price}}</span></small>
+          <small class="mx-2">X</small>
+          <small class="quantity">{{product.quantity}}</small>
         </div>
-        <div class="ml-4 d-flex align-items-baseline justify-content-center">
-          <spinner v-if="isLoading" class="mr-2" :color="'#d78398'" :height="'15px'" :width="'2px'" />
-          <button @click.prevent="decrease" v-if="product.quantity>0 && !isLoading" class="mr-2 btn btn-sm btn-outline-info"><i class="fas fa-minus"></i></button>
-          <button @click.prevent="increase" v-if="!isLoading" class="btn btn-sm btn-outline-info"><i class="fas fa-plus"></i></button>
+
+        <div class="d-flex justify-content-center align-items-center" style="min-width:4rem">
+          <spinner v-if="isLoading" class="mr-2" :color="'#d78398'" :height="'14px'" />
+          <button @click.prevent="decrease" v-if="product.quantity>0 && !isLoading" class="mr-2 btn btn-sm btn-outline-info btn-cart"><i class="fas fa-minus"></i></button>
+          <button @click.prevent="increase" v-if="!isLoading" class="btn btn-cart btn-sm btn-outline-info"><i class="fas fa-plus"></i></button>
         </div>
       </div>
     </div>
@@ -30,12 +43,10 @@ import spinner from 'vue-spinner/src/ScaleLoader'
 export default {
   data () {
     return {
-      isLoading: false,
-      incLoading: false,
-      remLoading: false
+      isLoading: false
     }
   },
-  props: ['product'],
+  props: ['product', 'outOfStocks'],
   components: {
     spinner
   },
@@ -62,10 +73,10 @@ export default {
         })
     },
     remove () {
-      console.log('ini remove di methods CartRow')
+      this.remLoading = true
       this.$store.dispatch('banishFromCartPromise', this.product._id._id)
         .then(() => {
-          console.log('dispatch remove berhasil, ini di methods Cartrow')
+          this.remLoading = false
         })
         .catch(err => {
           throw err
@@ -81,5 +92,12 @@ export default {
 }
 .quantity {
   font-size: 1em
+}
+.right-side {
+  min-width: 200px
+}
+.btn-cart {
+  width:30px;
+  height: 30px
 }
 </style>

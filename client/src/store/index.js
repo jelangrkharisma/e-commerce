@@ -40,6 +40,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    checkout (context) {
+      console.log('checkingout')
+      return axiosInstance({
+        method: 'post',
+        url: '/checkout',
+        headers: {
+          'access_token': localStorage.getItem('access_token')
+        }
+      })
+    },
     submitSignin (context, payload) {
       return axiosInstance({
         method: 'POST',
