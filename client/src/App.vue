@@ -9,6 +9,7 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 import navigationBar from './components/NavigationBar'
 export default {
   name: 'CakeStore',
@@ -19,6 +20,24 @@ export default {
     const accessToken = localStorage.getItem('access_token')
     if (accessToken) {
       this.$store.dispatch('verifyToken', accessToken)
+        .then(({ data }) => {
+          this.$store.commit('assignLoggedOnInfo', data)
+          Swal.fire({
+            icon: 'success',
+            title: 'Welcome Back, ' + data.name,
+            showConfirmButton: false,
+            timer: 1300,
+            showClass: {
+              popup: 'animated fadeInDown faster'
+            },
+            hideClass: {
+              popup: 'animated fadeOutUp faster'
+            }
+          })
+        })
+        .catch(err => {
+          throw err
+        })
     }
     this.$store.dispatch('fetchCatalogue')
   }
