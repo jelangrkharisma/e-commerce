@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axiosInstance from '../axios'
-import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -74,7 +73,7 @@ export default new Vuex.Store({
       })
     },
     verifyToken (context, accessToken) {
-      axiosInstance({
+      return axiosInstance({
         method: 'POST',
         url: '/verifyToken',
         headers: {
@@ -82,24 +81,6 @@ export default new Vuex.Store({
         },
         data: {}
       })
-        .then(({ data }) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Welcome Back, ' + data.name,
-            showConfirmButton: false,
-            timer: 1300,
-            showClass: {
-              popup: 'animated fadeInDown faster'
-            },
-            hideClass: {
-              popup: 'animated fadeOutUp faster'
-            }
-          })
-          context.commit('assignLoggedOnInfo', data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
 
     // PRODUCTS RELATED
