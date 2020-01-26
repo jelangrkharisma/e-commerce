@@ -1,6 +1,6 @@
 <template>
   <div class="div">
-    <div v-if="!isLoggedOn" class="card">
+    <div v-if="loggedOn._id == ''" class="card">
       <div class="card-body">
         <signupCard />
       </div>
@@ -13,13 +13,11 @@
 <script>
 import signupCard from '../components/SignupCard'
 import catalogue from '../components/Catalogue'
+import { mapState } from 'vuex'
 export default {
-  props: {
-    isLoggedOn: Boolean
-  },
-  data () {
-    return {}
-  },
+  computed: mapState({
+    loggedOn: 'loggedOn'
+  }),
   components: {
     signupCard,
     catalogue

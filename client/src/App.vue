@@ -1,12 +1,8 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <navigationBar :isLoggedOn="isLoggedOn"/>
+    <navigationBar/>
     <div class="container mt-3">
-      <router-view :isLoggedOn="isLoggedOn"/>
+      <router-view/>
     </div>
     <br><br><br>
 
@@ -16,13 +12,15 @@
 import navigationBar from './components/NavigationBar'
 export default {
   name: 'CakeStore',
-  data () {
-    return {
-      isLoggedOn: true
-    }
-  },
   components: {
     navigationBar
+  },
+  created () {
+    const accessToken = localStorage.getItem('access_token')
+    if (accessToken) {
+      this.$store.dispatch('verifyToken', accessToken)
+    }
+    this.$store.dispatch('fetchCatalogue')
   }
 }
 </script>

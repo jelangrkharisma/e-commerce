@@ -1,23 +1,22 @@
 <template>
-  <div class="">
-    <signinForm v-if="showform == 'signin'" />
-    <signupForm v-if="showform == 'signup'"/>
+  <div>
+    <signinForm  v-if="userForm == 'signin'" />
+    <signupForm  v-if="userForm == 'signup'"/>
   </div>
 </template>
 
 <script>
 import signinForm from '../components/SigninForm.vue'
 import signupForm from '../components/SignupForm.vue'
+import { mapState } from 'vuex'
 export default {
-  data () {
-    return {
-      showform: 'signin'
-    }
-  },
   components: {
     signinForm,
     signupForm
-  }
+  },
+  computed: mapState({
+    userForm: 'userForm'
+  })
 }
 </script>
 

@@ -10,14 +10,41 @@ const routes = [
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
   },
   {
+    path: '/profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
+    children: [
+      {
+        path: '',
+        name: 'profile',
+        component: () => import(/* webpackChunkName: "profile" */ '../components/Profile.vue')
+      },
+      {
+        path: 'addproduct',
+        name: 'Admin panel - add product',
+        component: () => import(/* webpackChunkName: "Admin panel" */ '../components/AddProduct.vue')
+      }
+    ]
+  },
+  {
     path: '/shoppingcart',
     name: 'shoppingCart',
     component: () => import(/* webpackChunkName: "shoppingCart" */ '../views/ShoppingCart.vue')
   },
   {
-    path: '/detail',
-    name: 'productDetail',
-    component: () => import(/* webpackChunkName: "productDetail" */ '../views/ProductDetail.vue')
+    path: '/search',
+    component: () => import(/* webpackChunkName: "products" */ '../views/Search.vue'),
+    name: 'search result'
+  },
+  {
+    path: '/products',
+    component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue'),
+    children: [
+      {
+        path: ':id',
+        name: 'product detail',
+        component: () => import(/* webpackChunkName: "productDetail" */ '../views/ProductDetail.vue')
+      }
+    ]
   }
 ]
 

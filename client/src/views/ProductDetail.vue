@@ -2,22 +2,22 @@
   <div class="wrapper">
     <div class="card">
       <div class="d-flex">
-        <img class="product-img" src="https://cdn.sallysbakingaddiction.com/wp-content/uploads/2018/09/chai-latte-cupcakes-600x900.jpg" alt="">
+        <img class="product-img" :src="product.image" alt="">
         <div class="p-3 d-flex flex-column justify-content-between">
           <div class="upper">
-            <h4>Vanilla Cinnamon Cupcakes</h4>
+            <h4>{{product.name}}</h4>
             <hr class="my-2">
             <br>
-            <strong>Price: </strong>300000<br>
-            <strong>Stock: </strong>2
+            <strong>Price: </strong>{{product.price}}<br>
+            <strong>Stock: </strong>{{product.stock}}
             <br>
-            <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eius distinctio tenetur, repellendus labore quis, eos cumque quisquam maxime neque tempore quasi ullam doloremque vel fugit! Maxime molestiae pariatur labore!</p> -->
+            <p>{{product.description}}</p>
           </div>
 
           <div class="under">
             <hr class="my-2">
-            <strong>On your cart: </strong>1<br>
-            <strong>Total: </strong>300000<br>
+            <strong>On your cart: </strong>{{onMyCart}}<br>
+            <strong>Total: </strong>{{onMyCart * product.price}}<br>
             <br>
             <i class="fa-btn fas fa-minus-circle text-info mr-2"></i>
             <div class="btn btn-info">add to cart</div>
@@ -29,16 +29,57 @@
 </template>
 
 <script>
+import axiosInstance from '../axios'
 export default {
-
+  data () {
+    return {
+      product: {}
+    }
+  },
+  created () {
+    axiosInstance({
+      method: 'get',
+      url: '/products/' + this.$route.params.id
+    })
+      .then(({ data }) => {
+        this.product = data.products
+      })
+  },
+  computed: {
+    onMyCart () {
+      let index = -1
+      let cart = this.$store.state.loggedOn.cart
+      for (let i = 0; i < cart.length; i++) {
+        if (this.product._id === cart[i]._id._id) {
+          index = i
+          break
+        }
+      }
+      if (index === -1) {
+        return 0
+      } else {
+        return cart[index].quantity
+      }
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
+h4 {
+  text-transform: capitalize
+}
 .product-img{
-  width: 300px;
-  height: 100%;
+  max-width: 20vw;
+  min-height: 100%;
   object-fit: cover;
   box-sizing: border-box;
+}
+.fa-btn{
+  cursor: pointer;
+}
+.fa-btn:hover{
+  cursor: pointer;
+  transform: translateY(1px)
 }
 </style>
