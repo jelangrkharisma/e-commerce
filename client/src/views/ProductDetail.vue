@@ -14,14 +14,14 @@
             <p>{{product.description}}</p>
           </div>
 
-          <div class="under">
+          <!-- <div class="under">
             <hr class="my-2">
             <strong>On your cart: </strong>{{onMyCart}}<br>
             <strong>Total: </strong>{{onMyCart * product.price}}<br>
             <br>
             <i class="fa-btn fas fa-minus-circle text-info mr-2"></i>
             <div class="btn btn-info">add to cart</div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@ export default {
       url: '/products/' + this.$route.params.id
     })
       .then(({ data }) => {
+        console.log(data)
         this.product = data.products
       })
   },
