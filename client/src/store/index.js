@@ -40,7 +40,6 @@ export default new Vuex.Store({
   },
   actions: {
     checkout (context) {
-      console.log('checkingout')
       return axiosInstance({
         method: 'post',
         url: '/checkout',
@@ -96,7 +95,6 @@ export default new Vuex.Store({
         })
     },
     fetchUserData (context) {
-      console.log('refetching user info')
       axiosInstance({
         method: 'get',
         url: '/fetchuserinfo',
@@ -105,7 +103,6 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, 'ini di store index fetchuserdata')
           context.commit('assignLoggedOnInfo', data)
         })
         .catch(err => {

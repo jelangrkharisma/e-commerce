@@ -62,6 +62,7 @@ export default {
           this.isSuccess = true
         })
         .catch(err => {
+          this.isLoading = false
           this.outOfStocks = err.response.data.outOfStockProducts
         })
     }

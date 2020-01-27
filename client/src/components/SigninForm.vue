@@ -23,7 +23,7 @@
       <div v-if="alert" class="alert alert-danger">
         {{alert}}
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button @click.prevent="submitSignin" type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </template>
@@ -50,6 +50,12 @@ export default {
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           this.$store.dispatch('verifyToken', localStorage.getItem('access_token'))
+            .then(({ data }) => {
+              this.$store.commit('assignLoggedOnInfo', data)
+            })
+            .catch(err => {
+              throw err
+            })
         })
         .catch(err => {
           this.alert = 'Wrong username / password'

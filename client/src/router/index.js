@@ -37,7 +37,7 @@ const routes = [
   },
   {
     path: '/products',
-    component: () => import(/* webpackChunkName: "products" */ '../views/Home.vue'),
+    component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue'),
     children: [
       {
         path: ':id',
